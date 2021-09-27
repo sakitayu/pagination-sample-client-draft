@@ -6,8 +6,11 @@ import {
 } from '../../Domain/Factory/UserFactory';
 
 export class UserRepository {
-    static async index(id: number): Promise<User> {
-        const res = await getNoAuthClient().get<UserResponseObject>(`/users`);
-        return UserFactory.createFromResponse(res.data);
+    static async index(): Promise<{ data: User[]; totalPages: number }> {
+        const res = await getNoAuthClient().get<UserResponseObject[]>(`/users`);
+        return {
+            data: res.data.map(UserFactory.createFromResponse),
+            totalPages: Number(res.headers['total-pages']),
+        };
     }
 }
