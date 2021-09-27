@@ -11,7 +11,7 @@ export default class RestClient {
 
     private get requestConfig(): AxiosRequestConfig {
         return {
-            baseURL: 'ここにAPIのローカルアドレス',
+            baseURL: process.env.REACT_APP_DEV_API_URL,
             headers: {
                 'Content-Type': 'application/json',
                 Authorization: this.token ? `Bearer ${this.token}` : null,
